@@ -12,6 +12,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { IconSymbol } from "@/components/ui/icon-symbol";
+import { DeleteConfirmationDialog } from "@/components/delete-confirmation-dialog";
 import { CategoryColors, Colors } from "@/constants/theme";
 import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useSubscriptions } from "@/hooks/use-subscriptions";
@@ -39,6 +40,8 @@ export default function DetailScreen() {
   const border = Colors[colorScheme ?? "light"].border;
 
   const [subscription, setSubscription] = useState<Subscription | undefined>();
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -48,23 +51,23 @@ export default function DetailScreen() {
   }, [id, getSubscriptionById]);
 
   const handleDelete = () => {
-    Alert.alert(
-      "サブスクを削除",
-      `「${subscription?.name}」を削除しますか？`,
-      [
-        { text: "キャンセル", style: "cancel" },
-        {
-          text: "削除",
-          style: "destructive",
-          onPress: async () => {
-            if (id) {
-              await deleteSubscription(id);
-              router.back();
-            }
-          },
-        },
-      ]
-    );
+    setShowDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    setIsDeleting(true);
+    try {
+      if (id) {
+        await deleteSubscription(id);
+        setShowDeleteDialog(false);
+        router.back();
+      }
+    } catch (error) {
+      console.error("Failed to delete subscription:", error);
+      Alert.alert("エラー", "削除に失敗しました");
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   const handleEdit = () => {
@@ -80,11 +83,9 @@ export default function DetailScreen() {
         <View style={[styles.header, { paddingTop: Math.max(insets.top, 20) }]}>
           <Pressable onPress={() => router.back()} style={styles.backButton}>
             <IconSymbol name="chevron.left" size={24} color={tint} />
-            <ThemedText style={[styles.backText, { color: tint }]}>戻る</ThemedText>
           </Pressable>
-        </View>
-        <View style={styles.notFound}>
-          <ThemedText>サブスクが見つかりません</ThemedText>
+          <ThemedText style={styles.headerTitle}>読み込み中</ThemedText>
+          <View style={styles.placeholder} />
         </View>
       </ThemedView>
     );
@@ -182,6 +183,17 @@ export default function DetailScreen() {
           </ThemedText>
         </Pressable>
       </ScrollView>
+
+      {/* 削除確認ダイアログ */}
+      <DeleteConfirmationDialog
+        visible={showDeleteDialog}
+        title="サブスクを削除"
+        message="このサブスクリプションを削除します。この操作は取り消せません。"
+        itemName={subscription.name}
+        isLoading={isDeleting}
+        onConfirm={handleConfirmDelete}
+        onCancel={() => setShowDeleteDialog(false)}
+      />
     </ThemedView>
   );
 }
@@ -207,6 +219,14 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 22,
   },
+  headerTitle: {
+    fontSize: 17,
+    lineHeight: 22,
+    fontWeight: "600",
+  },
+  placeholder: {
+    minWidth: 60,
+  },
   editButton: {
     padding: 8,
   },
@@ -214,11 +234,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     lineHeight: 22,
     fontWeight: "600",
-  },
-  notFound: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
   scrollView: {
     flex: 1,

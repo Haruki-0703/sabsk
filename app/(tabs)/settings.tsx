@@ -10,7 +10,7 @@ import { useColorScheme } from "@/hooks/use-color-scheme";
 import { useThemeColor } from "@/hooks/use-theme-color";
 
 interface SettingsItemProps {
-  icon: "bell.fill" | "creditcard.fill" | "info.circle.fill";
+  icon: "bell.fill" | "creditcard.fill" | "info.circle.fill" | "doc.text.fill" | "lock.fill";
   title: string;
   subtitle?: string;
   onPress?: () => void;
@@ -93,7 +93,17 @@ export default function SettingsScreen() {
           <SettingsItem
             icon="info.circle.fill"
             title="バージョン"
-            subtitle="v1.0.0"
+            subtitle="v1.3.0"
+          />
+          <SettingsItem
+            icon="doc.text.fill"
+            title="利用規約"
+            onPress={() => router.push("/terms-of-service")}
+          />
+          <SettingsItem
+            icon="lock.fill"
+            title="プライバシーポリシー"
+            onPress={() => router.push("/privacy-policy")}
           />
         </View>
 
