@@ -1,11 +1,12 @@
 import { Image } from "expo-image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 
 import { ThemedText } from "@/components/themed-text";
 import { CategoryColors } from "@/constants/theme";
 import { useThemeColor } from "@/hooks/use-theme-color";
 import { getServiceLogoUrl } from "@/lib/service-logos";
+import { fetchIconUrl, getIconChar } from "@/lib/icon-utils";
 import { 
   Subscription, 
   formatCurrency, 
@@ -25,7 +26,24 @@ export function SubscriptionCard({ subscription, onPress }: SubscriptionCardProp
   const categoryColor = CategoryColors[subscription.category] || CategoryColors.other;
   
   const [logoError, setLogoError] = useState(false);
+  const [clearbitIcon, setClearbitIcon] = useState<string | null>(null);
   const logoUrl = getServiceLogoUrl(subscription.name);
+
+  useEffect(() => {
+    const loadClearbitIcon = async () => {
+      try {
+        const icon = await fetchIconUrl(subscription.name, subscription.id);
+        setClearbitIcon(icon);
+      } catch (error) {
+        console.error(`Failed to load Clearbit icon for ${subscription.name}:`, error);
+      }
+    };
+
+    loadClearbitIcon();
+  }, [subscription.name, subscription.id]);
+
+  const displayIcon = clearbitIcon || logoUrl;
+  const iconChar = getIconChar(subscription.id);
 
   return (
     <Pressable
@@ -39,9 +57,9 @@ export function SubscriptionCard({ subscription, onPress }: SubscriptionCardProp
       <View style={styles.content}>
         {/* ロゴまたはカテゴリカラー */}
         <View style={styles.logoContainer}>
-          {logoUrl && !logoError ? (
+          {displayIcon && !logoError ? (
             <Image
-              source={{ uri: logoUrl }}
+              source={{ uri: displayIcon }}
               style={styles.logo}
               contentFit="contain"
               onError={() => setLogoError(true)}
@@ -49,7 +67,7 @@ export function SubscriptionCard({ subscription, onPress }: SubscriptionCardProp
           ) : (
             <View style={[styles.categoryIndicator, { backgroundColor: categoryColor }]}>
               <ThemedText style={styles.categoryInitial}>
-                {subscription.name.charAt(0).toUpperCase()}
+                {iconChar}
               </ThemedText>
             </View>
           )}
