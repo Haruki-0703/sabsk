@@ -1,9 +1,10 @@
 import { useRouter, Link } from "expo-router";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { 
   ActivityIndicator, 
   FlatList, 
   Pressable, 
+  RefreshControl,
   StyleSheet, 
   View 
 } from "react-native";
@@ -23,8 +24,15 @@ export default function HomeScreen() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
-  const { subscriptions, loading, monthlyTotal, yearlyTotal } = useSubscriptions();
+  const { subscriptions, loading, monthlyTotal, yearlyTotal, reload } = useSubscriptions();
   const tint = Colors[colorScheme ?? "light"].tint;
+  const [refreshing, setRefreshing] = useState(false);
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await reload();
+    setRefreshing(false);
+  }, [reload]);
 
   const handleAddPress = useCallback(() => {
     router.push("/add");
@@ -92,6 +100,16 @@ export default function HomeScreen() {
         ListEmptyComponent={ListEmpty}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            tintColor={tint}
+            colors={[tint]}
+            title="更新中..."
+            titleColor={tint}
+          />
+        }
       />
 
       <View style={[styles.fabContainer, { bottom: Math.max(insets.bottom, 16) + 60 }]}>
