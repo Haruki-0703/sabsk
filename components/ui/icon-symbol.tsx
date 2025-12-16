@@ -26,6 +26,7 @@ const MAPPING = {
   "creditcard.fill": "credit-card",
   "bell.fill": "notifications",
   "info.circle.fill": "info",
+  "chart.pie.fill": "pie-chart",
 } as IconMapping;
 
 /**

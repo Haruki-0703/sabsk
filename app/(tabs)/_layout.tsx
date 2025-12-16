@@ -34,6 +34,13 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
+        name="report"
+        options={{
+          title: "レポート",
+          tabBarIcon: ({ color }) => <IconSymbol size={28} name="chart.pie.fill" color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: "設定",

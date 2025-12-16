@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import { Pressable, ScrollView, StyleSheet, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
@@ -46,6 +47,7 @@ function SettingsItem({ icon, title, subtitle, onPress }: SettingsItemProps) {
 }
 
 export default function SettingsScreen() {
+  const router = useRouter();
   const insets = useSafeAreaInsets();
   const colorScheme = useColorScheme();
   const textSecondary = Colors[colorScheme ?? "light"].textSecondary;
@@ -69,6 +71,7 @@ export default function SettingsScreen() {
             icon="bell.fill"
             title="リマインダー"
             subtitle="請求日前に通知"
+            onPress={() => router.push("/notification-settings")}
           />
         </View>
 
