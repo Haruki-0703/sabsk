@@ -1,4 +1,4 @@
-import { useRouter } from "expo-router";
+import { useRouter, Link } from "expo-router";
 import { useCallback } from "react";
 import { 
   ActivityIndicator, 
@@ -94,19 +94,29 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      <Pressable
-        onPress={handleAddPress}
-        style={({ pressed }) => [
-          styles.fab,
-          { 
-            backgroundColor: tint,
-            bottom: Math.max(insets.bottom, 16) + 60,
-          },
-          pressed && styles.fabPressed,
-        ]}
-      >
-        <IconSymbol name="plus" size={28} color="#FFFFFF" />
-      </Pressable>
+      <View style={[styles.fabContainer, { bottom: Math.max(insets.bottom, 16) }]}>
+        <Link href="/templates" asChild>
+          <Pressable
+            style={({ pressed }) => [
+              styles.fab,
+              { backgroundColor: tint },
+              pressed && styles.fabPressed,
+            ]}
+          >
+            <IconSymbol name="plus" size={28} color="#FFFFFF" />
+          </Pressable>
+        </Link>
+        <Pressable
+          onPress={handleAddPress}
+          style={({ pressed }) => [
+            styles.fab,
+            { backgroundColor: tint },
+            pressed && styles.fabPressed,
+          ]}
+        >
+          <IconSymbol name="pencil" size={28} color="#FFFFFF" />
+        </Pressable>
+      </View>
     </ThemedView>
   );
 }
@@ -159,9 +169,12 @@ const styles = StyleSheet.create({
     opacity: 0.6,
     textAlign: "center",
   },
-  fab: {
+  fabContainer: {
     position: "absolute",
     right: 16,
+    gap: 12,
+  },
+  fab: {
     width: 56,
     height: 56,
     borderRadius: 28,
