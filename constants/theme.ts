@@ -1,41 +1,57 @@
 /**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
+ * SubscK - サブスク管理アプリ テーマ設定
+ * Apple Human Interface Guidelinesに準拠したカラーパレット
  */
 
 import { Platform } from "react-native";
 
-const tintColorLight = "#0a7ea4";
-const tintColorDark = "#fff";
-
 export const Colors = {
   light: {
-    text: "#11181C",
-    background: "#fff",
-    tint: tintColorLight,
-    icon: "#687076",
-    tabIconDefault: "#687076",
-    tabIconSelected: tintColorLight,
+    text: "#000000",
+    textSecondary: "#8E8E93",
+    background: "#F2F2F7",
+    cardBackground: "#FFFFFF",
+    tint: "#007AFF",
+    icon: "#8E8E93",
+    tabIconDefault: "#8E8E93",
+    tabIconSelected: "#007AFF",
+    destructive: "#FF3B30",
+    success: "#34C759",
+    border: "#C6C6C8",
   },
   dark: {
-    text: "#ECEDEE",
-    background: "#151718",
-    tint: tintColorDark,
-    icon: "#9BA1A6",
-    tabIconDefault: "#9BA1A6",
-    tabIconSelected: tintColorDark,
+    text: "#FFFFFF",
+    textSecondary: "#8E8E93",
+    background: "#000000",
+    cardBackground: "#1C1C1E",
+    tint: "#0A84FF",
+    icon: "#8E8E93",
+    tabIconDefault: "#8E8E93",
+    tabIconSelected: "#0A84FF",
+    destructive: "#FF453A",
+    success: "#30D158",
+    border: "#38383A",
   },
+};
+
+// カテゴリカラー
+export const CategoryColors: Record<string, string> = {
+  entertainment: "#FF9500",
+  music: "#AF52DE",
+  video: "#FF2D55",
+  productivity: "#007AFF",
+  cloud: "#5AC8FA",
+  gaming: "#34C759",
+  news: "#FF3B30",
+  fitness: "#FF9500",
+  other: "#8E8E93",
 };
 
 export const Fonts = Platform.select({
   ios: {
-    /** iOS `UIFontDescriptorSystemDesignDefault` */
     sans: "system-ui",
-    /** iOS `UIFontDescriptorSystemDesignSerif` */
     serif: "ui-serif",
-    /** iOS `UIFontDescriptorSystemDesignRounded` */
     rounded: "ui-rounded",
-    /** iOS `UIFontDescriptorSystemDesignMonospaced` */
     mono: "ui-monospace",
   },
   default: {
@@ -51,3 +67,22 @@ export const Fonts = Platform.select({
     mono: "SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
   },
 });
+
+// スペーシング
+export const Spacing = {
+  xs: 4,
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  xxl: 32,
+};
+
+// ボーダー半径
+export const BorderRadius = {
+  sm: 8,
+  md: 12,
+  lg: 16,
+  xl: 24,
+  full: 9999,
+};
