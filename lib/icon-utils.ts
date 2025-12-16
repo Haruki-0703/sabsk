@@ -70,12 +70,20 @@ export const LOCAL_ICON_MAP: Record<string, string> = {
 };
 
 /**
- * サービスIDからアイコン文字を取得
- * @param serviceId サービスID
- * @returns アイコン文字
+ * サービス名からアイコン文字を取得
+ * @param serviceName サービス名
+ * @returns アイコン文字（頭文字）
  */
-export function getIconChar(serviceId: string): string {
-  return LOCAL_ICON_MAP[serviceId] || "?";
+export function getIconChar(serviceName: string): string {
+  // ローカルマップをチェック
+  const normalizedName = serviceName.toLowerCase().replace(/\s+/g, "-");
+  if (LOCAL_ICON_MAP[normalizedName]) {
+    return LOCAL_ICON_MAP[normalizedName];
+  }
+  
+  // サービス名の頭文字を返す
+  const firstChar = serviceName.trim().charAt(0).toUpperCase();
+  return firstChar || "?";
 }
 
 /**

@@ -43,7 +43,7 @@ export function SubscriptionCard({ subscription, onPress }: SubscriptionCardProp
   }, [subscription.name, subscription.id]);
 
   const displayIcon = clearbitIcon || logoUrl;
-  const iconChar = getIconChar(subscription.id);
+  const iconChar = getIconChar(subscription.name);
 
   return (
     <Pressable

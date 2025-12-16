@@ -28,6 +28,9 @@ const MAPPING = {
   "info.circle.fill": "info",
   "chart.pie.fill": "pie-chart",
   "magnifyingglass": "search",
+  "list.bullet": "list",
+  "doc.text.fill": "description",
+  "lock.fill": "lock",
 } as IconMapping;
 
 /**

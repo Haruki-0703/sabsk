@@ -80,6 +80,13 @@ export default function RootLayout() {
               <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
               <Stack.Screen name="modal" options={{ presentation: "modal", title: "Modal" }} />
               <Stack.Screen name="oauth/callback" options={{ headerShown: false }} />
+              <Stack.Screen name="add" options={{ headerShown: false, presentation: "modal" }} />
+              <Stack.Screen name="templates" options={{ headerShown: false, presentation: "modal" }} />
+              <Stack.Screen name="detail/[id]" options={{ headerShown: false }} />
+              <Stack.Screen name="edit/[id]" options={{ headerShown: false }} />
+              <Stack.Screen name="notification-settings" options={{ headerShown: false }} />
+              <Stack.Screen name="privacy-policy" options={{ headerShown: false }} />
+              <Stack.Screen name="terms-of-service" options={{ headerShown: false }} />
             </Stack>
             <StatusBar style="auto" />
           </ThemeProvider>

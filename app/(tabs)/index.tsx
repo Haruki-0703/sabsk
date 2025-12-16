@@ -94,18 +94,19 @@ export default function HomeScreen() {
         showsVerticalScrollIndicator={false}
       />
 
-      <View style={[styles.fabContainer, { bottom: Math.max(insets.bottom, 16) }]}>
+      <View style={[styles.fabContainer, { bottom: Math.max(insets.bottom, 16) + 60 }]}>
+        {/* テンプレートから追加 */}
         <Link href="/templates" asChild>
           <Pressable
             style={({ pressed }) => [
-              styles.fab,
-              { backgroundColor: tint },
+              styles.fabSecondary,
               pressed && styles.fabPressed,
             ]}
           >
-            <IconSymbol name="plus" size={28} color="#FFFFFF" />
+            <IconSymbol name="list.bullet" size={22} color={tint} />
           </Pressable>
         </Link>
+        {/* 手動で追加 */}
         <Pressable
           onPress={handleAddPress}
           style={({ pressed }) => [
@@ -114,7 +115,7 @@ export default function HomeScreen() {
             pressed && styles.fabPressed,
           ]}
         >
-          <IconSymbol name="pencil" size={28} color="#FFFFFF" />
+          <IconSymbol name="plus" size={28} color="#FFFFFF" />
         </Pressable>
       </View>
     </ThemedView>
@@ -189,5 +190,20 @@ const styles = StyleSheet.create({
   fabPressed: {
     opacity: 0.9,
     transform: [{ scale: 0.95 }],
+  },
+  fabSecondary: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "rgba(0, 0, 0, 0.1)",
   },
 });
