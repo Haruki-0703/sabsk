@@ -39,6 +39,11 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     padding: 24,
     borderRadius: 16,
+    shadowColor: "#007AFF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 4,
+    elevation: 3,
   },
   label: {
     fontSize: 15,

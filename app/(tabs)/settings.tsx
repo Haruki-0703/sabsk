@@ -93,7 +93,7 @@ export default function SettingsScreen() {
           <SettingsItem
             icon="info.circle.fill"
             title="バージョン"
-            subtitle="v1.3.0"
+            subtitle="v1.4.1"
           />
           <SettingsItem
             icon="doc.text.fill"
